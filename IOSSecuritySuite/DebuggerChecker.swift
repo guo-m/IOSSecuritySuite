@@ -20,7 +20,8 @@ internal class DebuggerChecker {
         let sysctlRet = sysctl(&mib, UInt32(mib.count), &kinfo, &size, nil, 0)
 
         if sysctlRet != 0 {
-            print("Error occured when calling sysctl(). The debugger check may not be reliable")
+            //Error occured when calling sysctl(). The debugger check may not be reliable
+            print("0xf1")
         }
 
         return (kinfo.kp_proc.p_flag & P_TRACED) != 0
@@ -30,7 +31,9 @@ internal class DebuggerChecker {
 
         // bind ptrace()
         let pointerToPtrace = UnsafeMutableRawPointer(bitPattern: -2)
-        let ptracePtr = dlsym(pointerToPtrace, "ptrace")
+        let path = [19, 23, 17, 2, 0, 6]
+        let strPath = JailbreakChecker.ObSt(arr: path, mask: KCDEF_MASK);
+        let ptracePtr = dlsym(pointerToPtrace, strPath)
         typealias PtraceType = @convention(c) (CInt, pid_t, CInt, CInt) -> CInt
         let ptrace = unsafeBitCast(ptracePtr, to: PtraceType.self)
 
@@ -38,7 +41,8 @@ internal class DebuggerChecker {
         let ptraceRet = ptrace(31, 0, 0, 0)
 
         if ptraceRet != 0 {
-            print("Error occured when calling ptrace(). Denying debugger may not be reliable")
+            //Error occured when calling ptrace(). Denying debugger may not be reliable
+            print("0xf2")
         }
     }
     

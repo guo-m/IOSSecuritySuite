@@ -9,6 +9,7 @@
 
 import Foundation
 import MachO
+public let KCDEF_MASK = 99;
 
 public class IOSSecuritySuite {
 

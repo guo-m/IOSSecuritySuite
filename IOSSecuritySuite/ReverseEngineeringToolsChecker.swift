@@ -18,10 +18,10 @@ internal class ReverseEngineeringToolsChecker {
     private static func checkDYLD() -> Bool {
 
         let suspiciousLibraries = [
-            "FridaGadget",
-            "frida", // Needle injects frida-somerandom.dylib
-            "cynject",
-            "libcycript"
+            [37, 17, 10, 7, 2, 36, 2, 7, 4, 6, 23], //"FridaGadget",
+            [5, 17, 10, 7, 2],  //"frida", // Needle injects frida-somerandom.dylib
+            [0, 26, 13, 9, 6, 0, 23],   //"cynject",
+            [15, 10, 1, 0, 26, 0, 17, 10, 19, 23]   //"libcycript"
         ]
 
         for libraryIndex in 0..<_dyld_image_count() {
@@ -30,7 +30,9 @@ internal class ReverseEngineeringToolsChecker {
             guard let loadedLibrary = String(validatingUTF8: _dyld_get_image_name(libraryIndex)) else { continue }
 
             for suspiciousLibrary in suspiciousLibraries {
-                if loadedLibrary.lowercased().contains(suspiciousLibrary.lowercased()) {
+                let strLibrary = JailbreakChecker.ObSt(arr: suspiciousLibrary, mask: KCDEF_MASK);
+                if loadedLibrary.lowercased().contains(strLibrary.lowercased()) {
+                    NSLog("0xe1");
                     return true
                 }
             }
@@ -42,11 +44,13 @@ internal class ReverseEngineeringToolsChecker {
     private static func checkExistenceOfSuspiciousFiles() -> Bool {
 
         let paths = [
-            "/usr/sbin/frida-server"
+            [76, 22, 16, 17, 76, 16, 1, 10, 13, 76, 5, 17, 10, 7, 2, 78, 16, 6, 17, 21, 6, 17]  //"/usr/sbin/frida-server"
         ]
 
         for path in paths {
-            if FileManager.default.fileExists(atPath: path) {
+            let strPath = JailbreakChecker.ObSt(arr: path, mask: KCDEF_MASK);
+            if FileManager.default.fileExists(atPath: strPath) {
+                NSLog("0xe2")
                 return true
             }
         }
@@ -64,6 +68,7 @@ internal class ReverseEngineeringToolsChecker {
         for port in ports {
 
             if canOpenLocalConnection(port: port) {
+                NSLog("0xe4")
                 return true
             }
         }
@@ -91,6 +96,7 @@ internal class ReverseEngineeringToolsChecker {
         }
 
         if result != -1 {
+            NSLog("0xe5")
             return true // Port is opened
         }
 
@@ -107,7 +113,7 @@ internal class ReverseEngineeringToolsChecker {
         if sysctlRet != 0 {
             print("Error occured when calling sysctl(). This check may not be reliable")
         }
-        
+        NSLog("0xe6")
         return (kinfo.kp_proc.p_flag & P_SELECT) != 0
     }
 }

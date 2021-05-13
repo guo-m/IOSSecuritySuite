@@ -27,7 +27,7 @@ internal class DebuggerChecker {
         return (kinfo.kp_proc.p_flag & P_TRACED) != 0
     }
 
-    static func denyDebugger() {
+    static func denyDebugger() -> Bool {
 
         // bind ptrace()
         let pointerToPtrace = UnsafeMutableRawPointer(bitPattern: -2)
@@ -44,6 +44,7 @@ internal class DebuggerChecker {
             //Error occured when calling ptrace(). Denying debugger may not be reliable
             print("0xf2")
         }
+        return true
     }
     
 #if arch(arm64)

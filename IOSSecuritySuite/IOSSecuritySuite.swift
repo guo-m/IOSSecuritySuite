@@ -97,7 +97,7 @@ public class IOSSecuritySuite : NSObject {
      IOSSecuritySuite.denyDebugger()
      ```
      */
-    @objc public static func denyDebugger() {
+    @objc public static func denyDebugger() -> Bool {
         return DebuggerChecker.denyDebugger()
     }
     

@@ -44,7 +44,7 @@ internal class DebuggerChecker {
             //Error occured when calling ptrace(). Denying debugger may not be reliable
             print("0xf2")
         }
-        return true
+        return false
     }
     
 #if arch(arm64)

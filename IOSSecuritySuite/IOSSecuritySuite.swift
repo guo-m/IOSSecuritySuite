@@ -11,7 +11,7 @@ import Foundation
 import MachO
 public let KCDEF_MASK = 99;
 
-public class IOSSecuritySuite {
+public class IOSSecuritySuite : NSObject {
 
     /**
      This type method is used to determine the true/false jailbreak status
@@ -21,7 +21,7 @@ public class IOSSecuritySuite {
      let isDeviceJailbroken: Bool = IOSSecuritySuite.amIJailbroken()
      ```
      */
-    public static func amIJailbroken() -> Bool {
+    @objc public static func amIJailbroken() -> Bool {
         return JailbreakChecker.amIJailbroken()
     }
 
@@ -42,7 +42,7 @@ public class IOSSecuritySuite {
      - Returns: Tuple with with the jailbreak status *Bool* labeled *jailbroken* and *String* labeled *failMessage*
      to determine check that failed
      */
-    public static func amIJailbrokenWithFailMessage() -> (jailbroken: Bool, failMessage: String) {
+    @objc public static func amIJailbrokenWithFailMessage() -> (jailbroken: Bool, failMessage: String) {
         return JailbreakChecker.amIJailbrokenWithFailMessage()
     }
 
@@ -61,7 +61,7 @@ public class IOSSecuritySuite {
      - Returns: Tuple with with the jailbreak status *Bool* labeled *jailbroken* and *[FailedCheck]* labeled *failedChecks*
      for the list of failed checks
      */
-    public static func amIJailbrokenWithFailedChecks() -> (jailbroken: Bool, failedChecks: [FailedCheck]) {
+    @objc public static func amIJailbrokenWithFailedChecks() -> (jailbroken: Bool, failedChecks: [FailedCheck]) {
         return JailbreakChecker.amIJailbrokenWithFailedChecks()
     }
 
@@ -73,7 +73,7 @@ public class IOSSecuritySuite {
      let runInEmulator: Bool = IOSSecuritySuite.amIRunInEmulator()
      ```
      */
-    public static func amIRunInEmulator() -> Bool {
+    @objc public static func amIRunInEmulator() -> Bool {
         return EmulatorChecker.amIRunInEmulator()
     }
 
@@ -85,7 +85,7 @@ public class IOSSecuritySuite {
      let amIDebugged: Bool = IOSSecuritySuite.amIDebugged()
      ```
      */
-    public static func amIDebugged() -> Bool {
+    @objc public static func amIDebugged() -> Bool {
         return DebuggerChecker.amIDebugged()
     }
 
@@ -97,7 +97,7 @@ public class IOSSecuritySuite {
      IOSSecuritySuite.denyDebugger()
      ```
      */
-    public static func denyDebugger() {
+    @objc public static func denyDebugger() {
         return DebuggerChecker.denyDebugger()
     }
     
@@ -117,7 +117,7 @@ public class IOSSecuritySuite {
     - Parameter checks: The file Integrity checks you want
     - Returns: The file Integrity checker result
     */
-    public static func amITampered(_ checks: [FileIntegrityCheck]) -> FileIntegrityCheckResult {
+    @objc public static func amITampered(_ checks: [FileIntegrityCheck]) -> FileIntegrityCheckResult {
         return IntegrityChecker.amITampered(checks)
     }
 
@@ -129,7 +129,7 @@ public class IOSSecuritySuite {
      let amIReverseEngineered: Bool = IOSSecuritySuite.amIReverseEngineered()
      ```
      */
-    public static func amIReverseEngineered() -> Bool {
+    @objc public static func amIReverseEngineered() -> Bool {
         return ReverseEngineeringToolsChecker.amIReverseEngineered()
     }
     
@@ -148,7 +148,7 @@ public class IOSSecuritySuite {
     let amIRuntimeHook: Bool = amIRuntimeHook(dyldWhiteList: dylds, detectionClass: SomeClass.self, selector: #selector(SomeClass.someFunction), isClassMethod: false)
     ```
      */
-    public static func amIRuntimeHooked(dyldWhiteList: [String], detectionClass: AnyClass, selector: Selector, isClassMethod: Bool) -> Bool {
+    @objc public static func amIRuntimeHooked(dyldWhiteList: [String], detectionClass: AnyClass, selector: Selector, isClassMethod: Bool) -> Bool {
         return RuntimeHookChecker.amIRuntimeHook(dyldWhiteList: dyldWhiteList, detectionClass: detectionClass, selector: selector, isClassMethod: isClassMethod)
     }
     
@@ -160,7 +160,7 @@ public class IOSSecuritySuite {
     let amIProxied: Bool = IOSSecuritySuite.amIProxied()
     ```
      */
-    public static func amIProxied() -> Bool {
+    @objc public static func amIProxied() -> Bool {
         return ProxyChecker.amIProxied()
     }
 }

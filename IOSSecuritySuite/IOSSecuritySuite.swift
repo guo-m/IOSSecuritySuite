@@ -42,7 +42,7 @@ public class IOSSecuritySuite : NSObject {
      - Returns: Tuple with with the jailbreak status *Bool* labeled *jailbroken* and *String* labeled *failMessage*
      to determine check that failed
      */
-    @objc public static func amIJailbrokenWithFailMessage() -> (jailbroken: Bool, failMessage: String) {
+    public static func amIJailbrokenWithFailMessage() -> (jailbroken: Bool, failMessage: String) {
         return JailbreakChecker.amIJailbrokenWithFailMessage()
     }
 
@@ -61,7 +61,7 @@ public class IOSSecuritySuite : NSObject {
      - Returns: Tuple with with the jailbreak status *Bool* labeled *jailbroken* and *[FailedCheck]* labeled *failedChecks*
      for the list of failed checks
      */
-    @objc public static func amIJailbrokenWithFailedChecks() -> (jailbroken: Bool, failedChecks: [FailedCheck]) {
+    public static func amIJailbrokenWithFailedChecks() -> (jailbroken: Bool, failedChecks: [FailedCheck]) {
         return JailbreakChecker.amIJailbrokenWithFailedChecks()
     }
 
@@ -117,7 +117,7 @@ public class IOSSecuritySuite : NSObject {
     - Parameter checks: The file Integrity checks you want
     - Returns: The file Integrity checker result
     */
-    @objc public static func amITampered(_ checks: [FileIntegrityCheck]) -> FileIntegrityCheckResult {
+    public static func amITampered(_ checks: [FileIntegrityCheck]) -> FileIntegrityCheckResult {
         return IntegrityChecker.amITampered(checks)
     }
 
